@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GermaineTutoring</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Color Palette - Premium Editorial */
+  --bg-primary: #F9F8F6; /* Alabaster/Cream */
+  --bg-secondary: #FFFFFF; /* Pure White */
+  --bg-tertiary: #F0EFEB;
+  --bg-dark: #1C1E1D; /* Charcoal/Dark Olive base */
+
+  --ink-primary: #1C1E1D; /* Soft Black */
+  --ink-secondary: #4A4E4D; /* Muted Dark Gray */
+  --ink-tertiary: #7D8281;
+  --ink-inverse: #F9F8F6;
+
+  --accent-primary: #8F7C6B; /* Muted Terracotta / Warm Taupe */
+  --accent-secondary: #4C594A; /* Muted Olive */
+  --accent-highlight: #E5D5C5; /* Pale Warm Sand */
+
+  --border-light: #E8E6E1;
+  --border-dark: #3A3E3D;
+
+  /* Typography */
+  --font-display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+  --spacing-4xl: 128px;
+
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--ink-primary);
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+h1 { font-size: clamp(3rem, 6vw, 4.5rem); letter-spacing: -0.02em; }
+h2 { font-size: clamp(2.25rem, 4vw, 3rem); letter-spacing: -0.01em; }
+h3 { font-size: clamp(1.75rem, 3vw, 2.25rem); }
+h4 { font-size: 1.5rem; }
+
+p {
+  margin-bottom: var(--spacing-md);
+  color: var(--ink-secondary);
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--ink-primary);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.section {
+  padding: var(--spacing-4xl) 0;
+}
+
+/* Utilities */
+.text-center { text-align: center; }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+.mb-2xl { margin-bottom: var(--spacing-2xl); }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.grid { display: grid; }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+.gap-xl { gap: var(--spacing-xl); }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--ink-primary);
+  color: var(--bg-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--ink-primary);
+  border-color: var(--ink-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* App UI Elements (for Course Portal) */
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* View switching */
+.view-section {
+  display: none;
+}
+
+.view-section.active {
+  display: block;
+}
+
+/* Nav */
+.global-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(249, 248, 246, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-light);
+  z-index: 1000;
+  padding: var(--spacing-md) 0;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--ink-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+/* General utility additions */
+.w-full { width: 100%; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.bg-alabaster { background-color: var(--bg-primary); }
+.bg-dark { background-color: var(--bg-dark); }
+.bg-tertiary { background-color: var(--bg-tertiary); }
+.text-inverse { color: var(--ink-inverse); }
+.kicker {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+}
+.dek {
+  font-size: 1.25rem;
+  max-width: 700px;
+}
+.p-xl { padding: var(--spacing-xl); }
+
+/* Marketing Section Specifics */
+.proof-strip {
+  padding: var(--spacing-lg) 0;
+  border-top: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+  text-align: center;
+}
+.proof-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--accent-highlight);
+  margin-bottom: var(--spacing-xs);
+}
+.proof-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.layout-2-col {
+  grid-template-columns: 1fr 1fr;
+}
+.methodology-image-placeholder {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-md);
+}
+
+.programs-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+.program-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.program-features {
+  list-style: none;
+  flex-grow: 1;
+}
+.program-features li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.95rem;
+}
+.program-features li:last-child {
+  border-bottom: none;
+}
+.program-card.featured {
+  border-color: var(--accent-primary);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+.featured-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent-primary);
+  color: var(--bg-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.footer-link {
+  color: var(--ink-secondary);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .proof-grid { grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); }
+  .layout-2-col { grid-template-columns: 1fr; }
+  .programs-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; /* In a real app, implement a hamburger menu */ }
+  .footer-links { flex-direction: column; gap: var(--spacing-sm); align-items: center;}
+  .container.flex { flex-direction: column; gap: var(--spacing-lg); }
+}
+
+/* Course Portal Specifics */
+.course-layout {
+  display: flex;
+  min-height: calc(100vh - 80px); /* 80px for nav */
+}
+.course-sidebar {
+  width: 250px;
+  border-right: 1px solid var(--border-light);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  flex-shrink: 0;
+}
+.course-main {
+  flex-grow: 1;
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--bg-primary); /* Use primary bg for course main */
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+}
+.sidebar-link {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--ink-secondary);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.2s ease;
+}
+.sidebar-link:hover, .sidebar-link.active {
+  background-color: var(--bg-tertiary);
+  color: var(--ink-primary);
+}
+
+.layout-3-col {
+  grid-template-columns: repeat(3, 1fr);
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--ink-primary);
+  margin-bottom: var(--spacing-xs);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-secondary);
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-primary);
+}
+
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }
+.mt-2xl { margin-top: var(--spacing-2xl); }
+.p-md { padding: var(--spacing-md); }
+.p-sm { padding: var(--spacing-sm); }
+.text-muted { color: var(--ink-secondary); }
+
+@media (max-width: 768px) {
+  .course-layout { flex-direction: column; }
+  .course-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-light); padding: var(--spacing-lg); }
+  .sidebar-nav { flex-direction: row; overflow-x: auto; white-space: nowrap; padding-bottom: 8px; }
+  .layout-3-col { grid-template-columns: 1fr; }
+}
+
+/* Blog Section Specifics */
+.pb-md { padding-bottom: var(--spacing-md); }
+.pt-0 { padding-top: 0; }
+.blog-meta {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-tertiary);
+}
+.read-more {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.campaign-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.campaign-number {
+  font-size: 4rem;
+  color: var(--accent-highlight);
+  line-height: 1;
+  width: 80px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.campaign-asset-label {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background-color: var(--bg-primary);
+  color: var(--accent-secondary);
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+}
+
+@media (max-width: 768px) {
+  .campaign-post { flex-direction: column; text-align: center; gap: var(--spacing-md); }
+  .campaign-number { text-align: center; width: auto; font-size: 3rem; }
+}
+
+/* View specific overrides */
+body.view-course {
+  background-color: var(--bg-primary);
+}
+
+main {
+  padding-top: 80px; /* Space for fixed nav */
+  min-height: 100vh;
+}
+</style>
+</head>
+<body>
+
+<!-- Global Navigation -->
+<nav class="global-nav">
+  <div class="container nav-container">
+    <a href="#" class="logo" onclick="switchView('marketing')">Germaine Tutoring</a>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="switchView('marketing')">Marketing</button>
+      <button class="nav-link" onclick="switchView('course')">Course Portal</button>
+      <button class="nav-link" onclick="switchView('blog')">Blog</button>
+      <button class="btn btn-primary" onclick="openModal('booking-modal')">Book a Consult</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+  <!-- Views will be injected or toggled here -->
+  <section id="view-marketing" class="view-section active">
+    <!-- Hero Band -->
+    <header class="section bg-alabaster">
+      <div class="container text-center">
+        <p class="kicker mb-md">Process Over Genius</p>
+        <h1 class="mb-lg">Learn the reasoning, <br>not the trick.</h1>
+        <p class="dek mx-auto mb-xl">There is no LSAT magic, only repeatable processes. We break down complex reasoning into simple, atomized steps so you can diagnose exactly where your process breaks.</p>
+        <button class="btn btn-primary" onclick="openModal('booking-modal')">Book a Consult</button>
+      </div>
+    </header>
+
+    <!-- Proof Strip -->
+    <div class="proof-strip bg-dark text-inverse">
+      <div class="container">
+        <div class="proof-grid">
+          <div class="proof-item">
+            <div class="proof-number">180</div>
+            <div class="proof-label">Perfect LSAT (2020)</div>
+          </div>
+          <div class="proof-item">
+            <div class="proof-number">500+</div>
+            <div class="proof-label">Students Taught</div>
+          </div>
+          <div class="proof-item">
+            <div class="proof-number">14+</div>
+            <div class="proof-label">Avg. Point Improvement</div>
+          </div>
+          <div class="proof-item">
+            <div class="proof-number">483</div>
+            <div class="proof-label">Lesson Course Library</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Methodology -->
+    <section class="section" id="methodology">
+      <div class="container">
+        <div class="grid layout-2-col gap-xl items-center">
+          <div>
+            <p class="kicker mb-md">Methodology</p>
+            <h2 class="mb-lg">There is no LSAT magic, only repeatable processes.</h2>
+            <p>Complex reasoning becomes manageable when you break it into simple parts. We don't teach you to rely on intuition or "sounds right" guessing. We teach you the underlying architecture of the test.</p>
+            <p>Our approach breaks down dense arguments into simple, atomized steps. You will learn to identify the exact logical job of every sentence, map the argument's structure, and prephrase the answer before the distractors can influence you.</p>
+          </div>
+          <div class="methodology-image-placeholder bg-tertiary">
+             <!-- Placeholder for editorial image/diagram -->
+             <div class="text-center p-xl">
+                 <span class="font-display" style="font-size: 4rem; color: var(--ink-tertiary); font-style: italic;">Process</span>
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Programs -->
+    <section class="section bg-tertiary" id="programs">
+      <div class="container">
+        <div class="text-center mb-2xl">
+          <p class="kicker mb-md">Programs</p>
+          <h2>Targeted prep for every stage.</h2>
+        </div>
+
+        <div class="grid programs-grid gap-lg">
+          <!-- Tier 1 -->
+          <div class="card program-card">
+            <h3 class="mb-sm">2-Hour Acceleration</h3>
+            <p class="program-desc mb-lg">For targeted troubleshooting of specific question types or concepts.</p>
+            <ul class="program-features mb-xl">
+              <li>Deep dive into 1-2 specific weaknesses</li>
+              <li>Customized drill sets</li>
+              <li>Recording of the session</li>
+            </ul>
+            <button class="btn btn-outline w-full" onclick="openModal('booking-modal')">Book Consult</button>
+          </div>
+
+          <!-- Tier 2 (Featured) -->
+          <div class="card program-card featured">
+            <div class="featured-badge">Featured</div>
+            <h3 class="mb-sm">8-Hour Elevation</h3>
+            <p class="program-desc mb-lg">Comprehensive review and strategy rebuild for a significant score jump.</p>
+            <ul class="program-features mb-xl">
+              <li>Full diagnostic analysis</li>
+              <li>Complete process overhaul</li>
+              <li>Access to the core learning library</li>
+              <li>Guided blind review training</li>
+            </ul>
+            <button class="btn btn-primary w-full" onclick="openModal('booking-modal')">Book Consult</button>
+          </div>
+
+          <!-- Tier 3 -->
+          <div class="card program-card">
+            <h3 class="mb-sm">Elite Retainer</h3>
+            <p class="program-desc mb-lg">Full-cycle admissions and test prep support until test day.</p>
+            <ul class="program-features mb-xl">
+              <li>Unlimited asynchronous support</li>
+              <li>Weekly strategy sessions</li>
+              <li>Full access to all course materials</li>
+              <li>Admissions essay review</li>
+            </ul>
+            <button class="btn btn-outline w-full" onclick="openModal('booking-modal')">Apply for Retainer</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Strip -->
+    <section class="section bg-dark text-inverse text-center" id="contact">
+      <div class="container">
+        <h2 class="mb-lg">Ready to change how you see the LSAT?</h2>
+        <p class="dek mx-auto mb-xl" style="color: var(--ink-inverse); opacity: 0.8;">Stop relying on intuition. Start building a process.</p>
+        <button class="btn btn-primary" style="background-color: var(--bg-primary); color: var(--ink-primary);" onclick="openModal('booking-modal')">Book a Consult</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer bg-alabaster">
+      <div class="container flex justify-between items-center" style="padding: var(--spacing-xl) 0; border-top: 1px solid var(--border-light);">
+        <div class="logo" style="font-size: 1.2rem;">Germaine Tutoring</div>
+        <div class="footer-links flex gap-lg">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <span class="footer-link">© 2024 Germaine Tutoring</span>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <section id="view-course" class="view-section">
+    <div class="course-layout">
+      <!-- Side Nav -->
+      <aside class="course-sidebar bg-alabaster">
+        <div class="sidebar-header">
+          <h2 style="font-size: 1.25rem; font-family: var(--font-sans); font-weight: 600;">Portal</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="#" class="sidebar-link active">Dashboard</a>
+          <a href="#" class="sidebar-link">Course</a>
+          <a href="#" class="sidebar-link">Practice</a>
+          <a href="#" class="sidebar-link">Tests</a>
+          <a href="#" class="sidebar-link">Review (BR)</a>
+          <a href="#" class="sidebar-link">Sessions</a>
+          <a href="#" class="sidebar-link">Homework</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="course-main">
+        <div class="container" style="max-width: 1000px;">
+
+          <!-- Dashboard Section -->
+          <div class="course-section active" id="portal-dashboard">
+            <h1 class="mb-xl" style="font-size: 2.5rem;">Welcome back, Jordan.</h1>
+
+            <!-- Stat Tally Row -->
+            <div class="grid layout-3-col gap-lg mb-xl">
+              <div class="card text-center">
+                <div class="stat-number">1,248</div>
+                <div class="stat-label">Questions Completed</div>
+              </div>
+              <div class="card text-center">
+                <div class="stat-number">82%</div>
+                <div class="stat-label">LR Accuracy (L7)</div>
+              </div>
+              <div class="card text-center">
+                <div class="stat-number">-3</div>
+                <div class="stat-label">RC Average</div>
+              </div>
+            </div>
+
+            <!-- Course Progress -->
+            <div class="card mb-xl">
+              <div class="flex justify-between items-center mb-md">
+                <h3 style="font-size: 1.25rem; font-family: var(--font-sans); font-weight: 600;">Core Syllabus Progress</h3>
+                <span class="font-sans text-muted">Module 4 of 12</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 35%;"></div>
+              </div>
+            </div>
+
+            <!-- Next-Session Brief -->
+            <div class="card bg-dark text-inverse">
+              <div class="flex justify-between items-center mb-md">
+                <h3 style="font-size: 1.25rem; font-family: var(--font-sans); font-weight: 600; color: var(--ink-inverse);">Next Session</h3>
+                <span class="font-sans" style="opacity: 0.8;">Thursday, 4:00 PM EST</span>
+              </div>
+              <p style="color: var(--ink-inverse); opacity: 0.9;"><strong>Topic:</strong> Logical Reasoning - Sufficient Assumption & Necessary Assumption gaps.</p>
+              <div class="flex gap-md mt-lg">
+                <button class="btn btn-outline" style="border-color: var(--border-light); color: var(--ink-inverse);">Join Zoom</button>
+                <button class="btn btn-primary" style="background-color: var(--bg-primary); color: var(--ink-primary);">View Pre-work</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Placeholder for other sections (Library, Practice, Review) -->
+          <div class="mt-2xl">
+             <h2 class="mb-lg">Review & Wrong Answer Journal</h2>
+             <div class="card">
+                <!-- 5-step method strip -->
+                <div class="method-strip mb-lg bg-tertiary p-md" style="border-radius: var(--border-radius-sm);">
+                    <div class="flex justify-between text-center" style="font-size: 0.85rem; font-weight: 600; font-family: var(--font-sans); color: var(--accent-secondary);">
+                        <span>1. Job</span> → <span>2. Claim</span> → <span>3. Gap</span> → <span>4. Prephrase</span> → <span>5. Verify</span>
+                    </div>
+                </div>
+
+                <!-- Journal Table -->
+                <div class="journal-table-wrapper" style="overflow-x: auto;">
+                    <table class="journal-table w-full text-left" style="border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-dark);">
+                                <th class="p-sm">Identifier</th>
+                                <th class="p-sm">Analysis</th>
+                                <th class="p-sm">Correction</th>
+                                <th class="p-sm">Rule for Future</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-light);">
+                                <td class="p-sm" style="white-space: nowrap;"><span style="color: var(--accent-primary); font-weight: 600;">PT 88, S2, Q14</span></td>
+                                <td class="p-sm text-muted">Missed conditional reversal in the stimulus.</td>
+                                <td class="p-sm">Need to diagram formal logic before prephrasing.</td>
+                                <td class="p-sm">If formal logic is present, map it before reading choices.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-light);">
+                                <td class="p-sm" style="white-space: nowrap;"><span style="color: var(--accent-primary); font-weight: 600;">PT 88, S2, Q22</span></td>
+                                <td class="p-sm text-muted">Chose trap answer (C) - attractive distractor.</td>
+                                <td class="p-sm">C brings in outside info; B directly addresses the gap.</td>
+                                <td class="p-sm">Stick strictly to the scope of the premises.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+             </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-blog" class="view-section">
+    <!-- Blog Header -->
+    <header class="section bg-alabaster pb-md">
+      <div class="container text-center" style="max-width: 800px;">
+        <p class="kicker mb-md">The Journal</p>
+        <h1 class="mb-lg">Insights, strategy, and reasoning breakdowns.</h1>
+        <p class="dek mx-auto mb-xl">From the desk of Germaine Tutoring.</p>
+      </div>
+    </header>
+
+    <!-- Recent Posts (Three-Card Index) -->
+    <section class="section pt-0">
+      <div class="container">
+        <h2 class="mb-lg" style="font-size: 1.75rem;">Recent Dispatches</h2>
+        <div class="grid layout-3-col gap-lg">
+          <div class="card blog-card">
+            <div class="blog-meta mb-sm">Reading Comprehension · Framework</div>
+            <h3 class="mb-md" style="font-size: 1.5rem;">RC Question Type Map</h3>
+            <p class="mb-lg">A deep dive into Reading Comprehension question structures and how to map passages effectively.</p>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+          <div class="card blog-card">
+            <div class="blog-meta mb-sm">Logical Reasoning · Fundamentals</div>
+            <h3 class="mb-md" style="font-size: 1.5rem;">Conditional Logic Quantifier Guide</h3>
+            <p class="mb-lg">Navigating the nuances of 'some', 'most', 'many', and 'all' without getting lost in formal logic.</p>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+          <div class="card blog-card">
+            <div class="blog-meta mb-sm">Logical Reasoning · Strategy</div>
+            <h3 class="mb-md" style="font-size: 1.5rem;">Mastering the 21 LR Question Types</h3>
+            <p class="mb-lg">A framework for treating question stems as routing instructions, not just categories.</p>
+            <a href="#" class="read-more">Read Article →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Campaign Section: There Is No LSAT Magic -->
+    <section class="section bg-tertiary">
+      <div class="container">
+        <div class="text-center mb-2xl" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+          <p class="kicker mb-md">Campaign Series</p>
+          <h2 class="mb-md">There Is No LSAT Magic</h2>
+          <p class="dek mx-auto">The LSAT becomes manageable when you identify the repeatable job underneath each question. Explore our 7-part foundational series.</p>
+        </div>
+
+        <div class="campaign-list">
+          <!-- Post 1 -->
+          <article class="campaign-post flex gap-xl items-center mb-2xl">
+            <div class="campaign-number font-display">01</div>
+            <div class="campaign-content">
+              <h3 class="mb-sm">I analyzed the full range of Flaw questions so you can start seeing the recurring patterns.</h3>
+              <p class="mb-md">Flaw mastery is recognizing recurring reasoning breaks, not memorizing obscure flaw names.</p>
+              <div class="campaign-asset-label">Asset: Flaw Atlas ranking chart</div>
+            </div>
+          </article>
+
+          <!-- Post 2 -->
+          <article class="campaign-post flex gap-xl items-center mb-2xl">
+            <div class="campaign-number font-display">02</div>
+            <div class="campaign-content">
+              <h3 class="mb-sm">If LR is just reasoning, why do I need all these question types?</h3>
+              <p class="mb-md">Question types are routing instructions. The same argument requires a different approach depending on the stem.</p>
+              <div class="campaign-asset-label">Asset: The LR Question Map</div>
+            </div>
+          </article>
+
+          <!-- Post 3 -->
+          <article class="campaign-post flex gap-xl items-center mb-2xl">
+            <div class="campaign-number font-display">03</div>
+            <div class="campaign-content">
+              <h3 class="mb-sm">Why "I'm bad at science passages" is the wrong diagnosis.</h3>
+              <p class="mb-md">Difficulty has components (viewpoint shifts, abstraction, nested syntax). Master the drivers, not the topics.</p>
+              <div class="campaign-asset-label">Asset: RC difficulty ranking heatmap</div>
+            </div>
+          </article>
+
+          <!-- Post 4 -->
+          <article class="campaign-post flex gap-xl items-center mb-2xl">
+            <div class="campaign-number font-display">04</div>
+            <div class="campaign-content">
+              <h3 class="mb-sm">Prephrasing is not predicting the answer.</h3>
+              <p class="mb-md">Do your reasoning before the distractors influence it. Understand High-fidelity vs Structural vs Functional prephrasing.</p>
+              <div class="campaign-asset-label">Asset: Teaching carousel on prephrasing</div>
+            </div>
+          </article>
+
+          <!-- Post 5 -->
+          <article class="campaign-post flex gap-xl items-center mb-2xl">
+            <div class="campaign-number font-display">05</div>
+            <div class="campaign-content">
+              <h3 class="mb-sm">Watch me turn an 85-word stimulus into five simple statements.</h3>
+              <p class="mb-md">Complex reasoning becomes manageable when you break it into simple parts.</p>
+              <div class="campaign-asset-label">Asset: Screen-recorded walkthrough</div>
+            </div>
+          </article>
+
+          <!-- Post 6 -->
+          <article class="campaign-post flex gap-xl items-center mb-2xl">
+            <div class="campaign-number font-display">06</div>
+            <div class="campaign-content">
+              <h3 class="mb-sm">Your Wrong Answer Journal may not be helping you improve.</h3>
+              <p class="mb-md">A review is useful only if it changes a future decision. Entries must identify the exact reasoning mistake and a forward-looking rule.</p>
+              <div class="campaign-asset-label">Asset: Before/after carousel (Weak vs Actionable WAJ)</div>
+            </div>
+          </article>
+
+          <!-- Post 7 -->
+          <article class="campaign-post flex gap-xl items-center">
+            <div class="campaign-number font-display">07</div>
+            <div class="campaign-content">
+              <h3 class="mb-sm">There Is No LSAT Magic: Here Is Exactly Where My -0 Broke.</h3>
+              <p class="mb-md">A strong section becomes easier to understand when you can see the decisions behind it.</p>
+              <div class="campaign-asset-label">Asset: Full-section timed walkthrough</div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer bg-alabaster">
+      <div class="container flex justify-between items-center" style="padding: var(--spacing-xl) 0; border-top: 1px solid var(--border-light);">
+        <div class="logo" style="font-size: 1.2rem;">Germaine Tutoring</div>
+        <div class="footer-links flex gap-lg">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <span class="footer-link">© 2024 Germaine Tutoring</span>
+        </div>
+      </div>
+    </footer>
+  </section>
+</main>
+
+<script>
+  function switchView(viewId) {
+    // Hide all views
+    document.querySelectorAll('.view-section').forEach(el => {
+      el.classList.remove('active');
+    });
+
+    // Show selected view
+    document.getElementById('view-' + viewId).classList.add('active');
+
+    // Update nav links
+    document.querySelectorAll('.nav-link').forEach(el => {
+      el.classList.remove('active');
+    });
+    // Find the button that called this (simple approach: match onclick text)
+    document.querySelectorAll('.nav-link').forEach(el => {
+       if(el.getAttribute('onclick').includes(viewId)) {
+           el.classList.add('active');
+       }
+    });
+
+    // Body class for view-specific styling
+    document.body.className = 'view-' + viewId;
+    window.scrollTo(0,0);
+  }
+
+  function openModal(modalId) {
+      console.log('Opening modal:', modalId);
+      // In a full implementation, this would show a modal overlay
+      alert("Consultation Booking Modal would open here.");
+  }
+</script>
+
+</body>
+</html>
