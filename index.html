@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>GermaineTutoring Editorial Theme</title>
+<style>
+/* Base Typography & Palette */
+:root {
+  --paper: #FAFAFA;
+  --ink: #111812;
+  --muted: #6B7280;
+  --accent: #2B6336; /* Emerald */
+  --emerald-dark: #1F4226;
+  --marigold: #F5A623;
+  --sage-bg: #E8EDE9;
+  --sage-muted: #8E9C91;
+  --sage-light: #F0F4F1;
+  --line: #E5E7EB;
+
+  --display: 'Fraunces', Georgia, serif;
+  --editorial: 'Lora', 'Merriweather', serif;
+  --body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100%; background: #E5E7EB; color: var(--ink); font-family: var(--body); }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+/* Mockup Controls */
+.ctrl {
+  position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+  background: var(--ink); color: var(--paper); border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.brand { min-width: 0; margin-right: auto; }
+.brand b { display: block; font-family: var(--display); font-size: 15px; }
+.brand span { display: block; font: 500 9px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; opacity: .62; }
+.tabs { display: flex; gap: 5px; }
+.ctrl-tab {
+  border: 1px solid rgba(255,255,255,0.2); background: transparent; color: var(--paper);
+  border-radius: 5px; padding: 7px 9px; font: 600 9px/1 var(--mono); letter-spacing: .06em;
+}
+.ctrl-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* Stages */
+.stage { display: none; min-height: calc(100vh - 55px); background: #E5E7EB; padding: 20px; }
+.stage.active { display: block; }
+.shell { max-width: 1200px; margin: 0 auto; background: var(--paper); border: 1px solid var(--line); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+
+/* Global Chrome (Nav) */
+.site-nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; border-bottom: 1px solid var(--line); }
+.site-nav .logo { font-family: var(--display); font-weight: 800; font-size: 24px; }
+.site-nav-links { display: flex; gap: 24px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; }
+.site-nav-links a { color: var(--ink); text-decoration: none; }
+.btn-primary { background: var(--marigold); color: var(--ink); border: none; padding: 10px 20px; font-weight: 700; border-radius: 4px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* -- 1. MARKETING STAGE -- */
+.marketing-hero { padding: 100px 40px; text-align: center; background: var(--emerald-dark); color: var(--paper); }
+.marketing-hero .kicker { font-family: var(--mono); font-size: 12px; text-transform: uppercase; color: var(--marigold); margin-bottom: 20px; font-weight: 600; letter-spacing: 0.1em; }
+.marketing-hero h1 { font-family: var(--display); font-size: 64px; margin: 0 0 24px; line-height: 1.1; font-weight: 800; }
+.marketing-hero p { font-family: var(--editorial); font-size: 22px; max-width: 700px; margin: 0 auto 40px; color: var(--sage-light); line-height: 1.6; }
+.marketing-hero .btn-group { display: flex; gap: 16px; justify-content: center; }
+.marketing-hero .btn-secondary { background: transparent; border: 1px solid var(--paper); color: var(--paper); padding: 10px 20px; font-weight: 600; border-radius: 4px; }
+
+.marketing-methodology { padding: 80px 40px; background: var(--paper); }
+.marketing-methodology h2 { text-align: center; font-family: var(--display); font-size: 40px; margin-bottom: 40px; }
+.method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.method-card { border: 1px solid var(--line); padding: 30px; background: var(--sage-bg); border-radius: 4px; }
+.method-card h3 { font-family: var(--display); font-size: 24px; margin-bottom: 16px; }
+.method-card p { color: var(--muted); line-height: 1.6; }
+
+.marketing-consult { padding: 80px 40px; background: var(--sage-light); text-align: center; border-top: 1px solid var(--line); }
+.marketing-consult form { max-width: 600px; margin: 40px auto 0; text-align: left; background: var(--paper); padding: 40px; border: 1px solid var(--line); border-radius: 8px; }
+.form-field { margin-bottom: 20px; }
+.form-field label { display: block; font-family: var(--mono); font-size: 11px; text-transform: uppercase; margin-bottom: 8px; color: var(--muted); }
+.form-field input { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 4px; font-family: var(--body); }
+
+
+/* -- 2. COURSE STAGE -- */
+.course-portal { display: flex; height: calc(100vh - 95px); background: var(--paper); max-width: 1200px; margin: 0 auto; border: 1px solid var(--line); box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.course-sidebar { width: 260px; background: var(--emerald-dark); color: var(--paper); padding: 30px 0; display: flex; flex-direction: column; flex-shrink: 0; }
+.course-sidebar .logo { font-family: var(--display); font-size: 20px; padding: 0 30px 30px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; }
+.course-nav { display: flex; flex-direction: column; flex-grow: 1; }
+.course-nav a { padding: 12px 30px; color: var(--sage-light); text-decoration: none; font-size: 14px; font-weight: 500; border-left: 3px solid transparent; }
+.course-nav a.active { background: rgba(255,255,255,0.05); color: var(--paper); border-left-color: var(--marigold); font-weight: 600; }
+.student-profile { padding: 20px 30px; border-top: 1px solid rgba(255,255,255,0.1); font-family: var(--mono); font-size: 12px; color: var(--marigold); text-transform: uppercase; }
+
+.course-main { flex-grow: 1; padding: 40px; overflow-y: auto; }
+.course-header { margin-bottom: 40px; }
+.course-header h2 { font-family: var(--display); font-size: 32px; margin: 0; }
+
+.course-dashboard .stat-tally { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+.stat-box { border: 1px solid var(--line); padding: 20px; border-radius: 6px; background: var(--paper); }
+.stat-box strong { display: block; font-family: var(--display); font-size: 36px; color: var(--accent); margin-bottom: 8px; }
+.stat-box small { font-family: var(--mono); font-size: 11px; text-transform: uppercase; color: var(--muted); }
+
+.course-dashboard .progress-section { margin-bottom: 40px; }
+.progress-bar-wrap { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 12px 0; }
+.progress-bar { height: 100%; background: var(--marigold); }
+
+.course-panels-demo { margin-top: 60px; border-top: 1px dashed var(--line); padding-top: 40px; }
+.course-panels-demo h3 { color: var(--muted); font-size: 14px; text-transform: uppercase; margin-bottom: 20px; font-family: var(--mono); }
+.lib-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+.lib-card { padding: 24px; border: 1px solid var(--line); border-radius: 6px; background: var(--sage-bg); }
+.lib-card h4 { font-family: var(--display); font-size: 20px; margin: 0 0 10px; }
+
+.waj-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.waj-table th, .waj-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14px; }
+.waj-table th { font-family: var(--mono); font-size: 11px; text-transform: uppercase; color: var(--muted); }
+.tag.wrong { background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-left: 8px; }
+
+
+/* -- 3. BLOG STAGE -- */
+.blog-wrap { max-width: 1200px; margin: 0 auto; background: var(--paper); border: 1px solid var(--line); box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.blog-header { text-align: center; padding: 80px 40px; background: var(--sage-bg); border-bottom: 1px solid var(--line); }
+.blog-header h2 { font-family: var(--display); font-size: 48px; margin: 0 0 16px; }
+.blog-header p { font-family: var(--editorial); font-size: 20px; color: var(--muted); max-width: 600px; margin: 0 auto; }
+
+.blog-index { padding: 60px 40px; border-bottom: 1px solid var(--line); }
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.blog-card-img { height: 200px; background: var(--sage-light); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); color: var(--muted); }
+.blog-card .meta { font-family: var(--mono); font-size: 11px; text-transform: uppercase; color: var(--marigold); margin-bottom: 12px; font-weight: 600; }
+.blog-card h3 { font-family: var(--display); font-size: 24px; margin: 0 0 12px; line-height: 1.2; }
+.blog-card p { font-size: 15px; color: var(--muted); margin-bottom: 20px; }
+.blog-card a { font-family: var(--mono); font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--emerald-dark); text-decoration: none; border-bottom: 2px solid var(--marigold); padding-bottom: 2px; }
+
+.campaign-post { padding: 80px 40px; }
+.campaign-post article { max-width: 720px; margin: 0 auto; }
+.campaign-post .meta { display: block; text-align: center; font-family: var(--mono); font-size: 13px; text-transform: uppercase; color: var(--marigold); margin-bottom: 20px; font-weight: 600; }
+.campaign-post h1 { font-family: var(--display); font-size: 48px; text-align: center; margin: 0 0 40px; line-height: 1.1; }
+.campaign-post .dek { font-family: var(--editorial); font-size: 22px; font-style: italic; color: var(--muted); text-align: center; margin-bottom: 60px; line-height: 1.5; }
+.campaign-post .prose p { font-family: var(--editorial); font-size: 18px; line-height: 1.8; margin-bottom: 24px; color: var(--ink); }
+.campaign-post .prose h3 { font-family: var(--display); font-size: 28px; margin: 48px 0 24px; }
+.video-placeholder { background: var(--sage-light); border: 1px dashed var(--sage-muted); padding: 80px 20px; text-align: center; font-family: var(--mono); color: var(--muted); margin: 40px 0; }
+.video-placeholder .player { max-width: 400px; height: 250px; border: 1px dashed var(--muted); margin: 20px auto 0; display: flex; align-items: center; justify-content: center; }
+
+/* Responsive Overrides */
+@media(max-width: 760px) {
+  .ctrl { flex-wrap: wrap; }
+  .tabs { width: 100%; justify-content: space-between; }
+  .site-nav { flex-direction: column; gap: 16px; padding: 20px; text-align: center; }
+  .stage { padding: 10px; }
+  .method-grid, .blog-grid, .course-dashboard .stat-tally, .lib-grid { grid-template-columns: 1fr; }
+  .marketing-hero h1 { font-size: 40px; }
+  .marketing-hero { padding: 60px 20px; }
+  .course-portal { flex-direction: column; height: auto; }
+  .course-sidebar { width: 100%; padding: 20px; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .course-sidebar .logo { padding: 0; border: none; margin: 0; }
+  .course-nav { width: 100%; flex-direction: row; overflow-x: auto; margin-top: 20px; gap: 10px; }
+  .course-nav a { padding: 8px 12px; border-left: none; border-bottom: 2px solid transparent; font-size: 12px; white-space: nowrap; }
+  .course-nav a.active { border-bottom-color: var(--marigold); }
+  .course-main { padding: 20px; }
+  .campaign-post h1 { font-size: 32px; }
+  .blog-header h2 { font-size: 36px; }
+  .waj-table { display: block; overflow-x: auto; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- MOCKUP CONTROL PANEL -->
+<div class="ctrl">
+  <div class="brand"><b>GermaineTutoring</b><span>Editorial Theme Mockup</span></div>
+  <div class="tabs" role="tablist">
+    <button aria-selected="true" class="ctrl-tab active" data-stage="1" role="tab">1. Marketing</button>
+    <button aria-selected="false" class="ctrl-tab" data-stage="2" role="tab">2. Course</button>
+    <button aria-selected="false" class="ctrl-tab" data-stage="3" role="tab">3. Blog</button>
+  </div>
+</div>
+
+<!-- 1. MARKETING STAGE -->
+<section class="stage active" data-stage-panel="1" role="tabpanel">
+  <div class="shell">
+    <nav class="site-nav">
+      <div class="logo">GermaineTutoring</div>
+      <div class="site-nav-links">
+        <a href="#">Methodology</a>
+        <a href="#">Programs</a>
+        <a href="#">Journal</a>
+      </div>
+      <button class="btn-primary">Book a Consult</button>
+    </nav>
+
+    <div class="marketing-hero">
+      <div class="kicker">Process Over Genius</div>
+      <h1>Learn the reasoning,<br/>not the trick.</h1>
+      <p>A clear, repeatable process for Logical Reasoning and Reading Comprehension, built around understanding what the test is actually asking you to do.</p>
+      <div class="btn-group">
+        <button class="btn-primary">Book a free consult</button>
+        <button class="btn-secondary">Open an RC map</button>
+      </div>
+    </div>
+
+    <div class="marketing-methodology">
+      <h2>Methodology</h2>
+      <div class="method-grid">
+        <div class="method-card">
+          <h3>Why the gap matters</h3>
+          <p>Separate what the argument proves from what it merely needs you to assume.</p>
+        </div>
+        <div class="method-card">
+          <h3>Map the passage</h3>
+          <p>Track function, relationship, and the author’s reason for putting each paragraph there.</p>
+        </div>
+        <div class="method-card">
+          <h3>Blind Review</h3>
+          <p>Use review to identify where your process broke, not just which letter was wrong.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="marketing-consult">
+      <h2>Reserve a Consultation</h2>
+      <form>
+        <div class="form-field">
+          <label>Name</label>
+          <input type="text" value="Jordan Lee" />
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" value="jordan@example.com" />
+        </div>
+        <div class="form-field">
+          <label>What do you want to work on?</label>
+          <input type="text" value="RC passage mapping and LR assumption questions" />
+        </div>
+        <button type="button" class="btn-primary" style="width: 100%; margin-top: 10px;">Reserve Consultation</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- 2. COURSE STAGE -->
+<section class="stage" data-stage-panel="2" role="tabpanel">
+  <div class="course-portal">
+    <aside class="course-sidebar">
+      <div class="logo">GermaineTutoring</div>
+      <nav class="course-nav">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Course Library</a>
+        <a href="#">Practice &amp; Explanations</a>
+        <a href="#">Blind Review (WAJ)</a>
+        <a href="#">Tests &amp; History</a>
+        <a href="#">Homework</a>
+        <a href="#">Sessions</a>
+      </nav>
+      <div class="student-profile">Student: Jordan L.</div>
+    </aside>
+
+    <main class="course-main">
+      <header class="course-header">
+        <h2>Student Dashboard</h2>
+      </header>
+
+      <div class="course-dashboard">
+        <div class="stat-tally">
+          <div class="stat-box"><strong>420</strong><small>Questions Completed</small></div>
+          <div class="stat-box"><strong>88%</strong><small>LR Accuracy (L7D)</small></div>
+          <div class="stat-box"><strong>91%</strong><small>RC Accuracy (L7D)</small></div>
+        </div>
+
+        <div class="progress-section">
+          <h3>Course Progress</h3>
+          <div class="progress-bar-wrap"><div class="progress-bar" style="width: 65%;"></div></div>
+          <p style="font-size: 14px; color: var(--muted);">Module 4: Necessary Assumptions</p>
+        </div>
+
+        <div class="progress-section" style="margin-bottom: 0;">
+          <h3>Next Session Brief</h3>
+          <div class="stat-box" style="margin-top: 10px;">
+            <p style="margin: 0 0 5px;"><strong>Tuesday, 4:00 PM EST</strong></p>
+            <p style="margin: 0; color: var(--muted);">Focus: RC Passage Architecture and comparative reading.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-panels-demo">
+        <h3>Other Core Views Included</h3>
+
+        <div class="lib-grid">
+          <div class="lib-card">
+            <h4>Learning Library</h4>
+            <p style="font-size: 14px; color: var(--muted);">Modules for Logical Reasoning and Reading Comprehension methodologies.</p>
+          </div>
+          <div class="lib-card">
+            <h4>Practice &amp; Explanations</h4>
+            <p style="font-size: 14px; color: var(--muted);">Filterable browse and deep-dive question breakdowns.</p>
+          </div>
+        </div>
+
+        <h4>Blind Review &amp; Wrong Answer Journal</h4>
+        <table class="waj-table">
+          <thead><tr><th>Identifier</th><th>Analysis</th><th>Correction</th><th>Rule for Future</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>PT 89 S2 Q14 (LR) <span class="tag wrong">Wrong</span></td>
+              <td>Prephrased the gap but fell for a reversal trap.</td>
+              <td>(D) correctly patches the gap.</td>
+              <td>Always translate conditionals before matching.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- 3. BLOG STAGE -->
+<section class="stage" data-stage-panel="3" role="tabpanel">
+  <div class="blog-wrap">
+    <nav class="site-nav">
+      <div class="logo">GermaineTutoring</div>
+      <div class="site-nav-links">
+        <a href="#">Methodology</a>
+        <a href="#">Programs</a>
+        <a href="#">Journal</a>
+      </div>
+      <button class="btn-primary">Book a Consult</button>
+    </nav>
+
+    <div class="blog-header">
+      <h2>Journal &amp; Insights</h2>
+      <p>Strategy and reasoning breakdowns from GermaineTutoring. There is no LSAT magic.</p>
+    </div>
+
+    <div class="blog-index">
+      <div class="blog-grid">
+        <div class="blog-card">
+          <div class="blog-card-img" style="background: var(--emerald-dark); color: var(--marigold);">[RC Map Image]</div>
+          <div class="meta">Reading Comprehension</div>
+          <h3>RC Question Type Map</h3>
+          <p>A deep dive into Reading Comprehension question structures.</p>
+          <a href="#">Read Article</a>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-img" style="background: var(--sage-muted); color: var(--paper);">[Logic Guide Image]</div>
+          <div class="meta">Logical Reasoning</div>
+          <h3>Conditional Logic Quantifier Guide</h3>
+          <p>Navigating 'some', 'most', 'many', and 'all' without getting lost.</p>
+          <a href="#">Read Article</a>
+        </div>
+        <div class="blog-card">
+          <div class="blog-card-img" style="background: var(--marigold); color: var(--emerald-dark);">[LR Types Image]</div>
+          <div class="meta">Strategy</div>
+          <h3>Mastering the 21 LR Question Types</h3>
+          <p>Learn what each question stem is actually asking you to do.</p>
+          <a href="#">Read Article</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="campaign-post">
+      <article>
+        <span class="meta">Campaign: There Is No LSAT Magic – Post 7</span>
+        <h1>There Is No LSAT Magic: Here Is Exactly Where My -0 Broke</h1>
+        <p class="dek">A strong section becomes easier to understand when you can see the decisions behind it.</p>
+
+        <div class="prose">
+          <p>The LSAT becomes manageable when you identify the repeatable job underneath each question. It's not about being "smart" enough to see the answer; it's about having a process to construct it.</p>
+          <p>When I took my last diagnostic before the real thing, I scored a -0 on Logical Reasoning. People often ask me what "clicked" to make that happen. The truth is, nothing clicked. There was no epiphany. Instead, there was just a rigorous, mechanical application of the rules we've discussed in this series.</p>
+
+          <h3>The Process in Action</h3>
+          <p>Let's walk through a full section under time pressure. Watch the decisions I make. Notice how I don't try to predict the right answer based on intuition. Instead, I prephrase functionally, I identify the structural gap, and I ruthlessly eliminate choices that don't match the routing instructions of the stem.</p>
+
+          <div class="video-placeholder">
+            ASSET: FULL-SECTION TIMED WALKTHROUGH VIDEO
+            <div class="player">[Video Player Placeholder]</div>
+          </div>
+
+          <p>This is what it looks like to trust the process. There is no LSAT magic. There is only work, and the right way to do it.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+  function switchTab(n) {
+    document.querySelectorAll('.stage').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.ctrl-tab').forEach(el => {
+      el.classList.remove('active');
+      el.setAttribute('aria-selected', 'false');
+    });
+
+    document.querySelector('.stage[data-stage-panel="'+n+'"]').classList.add('active');
+    const btn = document.querySelector('.ctrl-tab[data-stage="'+n+'"]');
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    window.scrollTo(0,0);
+  }
+
+  document.querySelectorAll('.ctrl-tab').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      switchTab(e.target.getAttribute('data-stage'));
+    });
+  });
+</script>
+</body>
+</html>
